@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+.git/
+.venv/
+*.egg-info/
+wandb/
+.vscode/
+.idea/
+.DS_Store
+
+# Local credentials and other private files
+.secrets/
+.env
+.env.*
+!.env.example
+
+# Data artifacts
+/data/
+checkpoints/
+videos/
+*.zip
+exp/
+
+# Modal logs/artifacts
+modal_volume/
