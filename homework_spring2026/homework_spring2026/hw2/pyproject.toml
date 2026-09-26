@@ -12,7 +12,11 @@ dependencies = [
     "torch>=2.9.1",
     "tqdm>=4.67.1",
     "wandb[media]>=0.23.1",
-    "gym[classic_control,mujoco,box2d]==0.25.2",
+    # Windows 上 box2d-py 只有源码包，需要额外的 MSVC 工具链；Box2D 2.3.10
+    # 提供兼容 Python 3.10 的预编译 wheel，并暴露相同的 `Box2D` 模块。
+    "gym[classic_control,mujoco]==0.25.2",
+    "Box2D==2.3.10; sys_platform == 'win32'",
+    "box2d-py==2.3.5; sys_platform != 'win32'",
     "numpy<2.0.0",
 ]
 
@@ -25,3 +29,8 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.uv]
+# 本仓库所在的 Windows 路径较长；将环境实体放进 uv 缓存可避免 PyTorch 的
+# 深层头文件超过传统 MAX_PATH，同时 uv 仍会在项目中维护 .venv 入口供编辑器识别。
+preview-features = ["centralized-project-envs"]
